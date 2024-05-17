@@ -1,0 +1,14 @@
+server:
+  port: 9872
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    loadbalancer:
+      retry:
+        enabled: true
+
+
