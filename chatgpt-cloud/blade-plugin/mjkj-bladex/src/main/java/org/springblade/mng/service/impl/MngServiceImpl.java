@@ -3,6 +3,7 @@ package org.springblade.mng.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.mng.cgform.service.IMjkjBaseSqlService;
+import org.springblade.mng.common.constant.ServiceTypeConstant;
 import org.springblade.mng.common.utils.MjkjUtils;
 import org.springblade.core.secure.utils.AuthUtil;
 import org.springblade.core.tool.utils.DateUtil;
@@ -49,9 +50,9 @@ public class MngServiceImpl implements IMngService {
 			Long bladeUserId = MjkjUtils.getMap2Long(wxuserMap, "blade_user_id");
 			String remarkStr="【"+ AuthUtil.getUserName() +"】"+remark;
 			if(Func.equals(type,"add")){
-				webService.addWxuserQuestionNum(bladeUserId,id,5,num,null,remarkStr,manageType);
+				webService.addWxuserQuestionNum(bladeUserId,id,ServiceTypeConstant.rg,num,null,remarkStr,manageType);
 			}else{//减少
-				webService.subWxuserQuestionNum(bladeUserId,id,5,num,null,remarkStr,manageType);
+				webService.subWxuserQuestionNum(bladeUserId,id, ServiceTypeConstant.rg,num,null,remarkStr,manageType);
 			}
 		}
 
@@ -83,7 +84,6 @@ public class MngServiceImpl implements IMngService {
 		orderMap.put("rl_num",rlCou);
 		orderMap.put("order_time",now);
 		orderMap.put("chat_goods_id",goodsId);
-		orderMap.put("pay_status",1);//已支付
 		orderMap.put("pay_type",1);//人工
 		orderMap.put("pay_code",IdWorker.getIdStr());
 		orderMap.put("pay_time",now);

@@ -62,32 +62,6 @@
         order by lm.id+0 desc
     </select>
 
-    <select id="getShiniuMessageMoreFunHistoryList" resultType="map">
-        SELECT
-        lm.id as id,
-        wx.wx_name as view_wxname,
-        lm.more_name,
-        lm.message_q,
-        lm.message_a,
-        lm.message_q_time,
-        lm.message_a_time
-        FROM
-        chat_shiniu_log_message  lm
-        INNER JOIN chat_wxuser wx on lm.wxuser_id =wx.id
-        WHERE
-        lm.is_deleted =0
-        and wx.is_deleted =0
-        <if test="params.more_name!=null and params.more_name!=''">
-            and lm.more_name =#{params.more_name}
-        </if>
-        <if test="params.view_wxname!=null and params.view_wxname!=''">
-            and wx.wx_name like concat('%', #{params.view_wxname}, '%')
-        </if>
-        order by lm.id+0 desc
-    </select>
-
-
-
     <select id="getWxUserList" resultType="map">
         SELECT
         *
@@ -392,30 +366,6 @@
             and  gor.pay_status = #{params.pay_status}
         </if>
         order by gor.id+0 desc
-    </select>
-
-    <select id="getShiniuMessageMoreFunHistoryListTwo" resultType="map">
-        SELECT
-        lm.id as id,
-        wx.wx_name as view_wxname,
-        lm.fun_name,
-        lm.message_q,
-        lm.message_a,
-        lm.message_q_time,
-        lm.message_a_time
-        FROM
-        chat_shiniu_log_message_fun  lm
-        INNER JOIN chat_wxuser wx on lm.wxuser_id =wx.id
-        WHERE
-        lm.is_deleted =0
-        and wx.is_deleted =0
-        <if test="params.fun_name!=null and params.fun_name!=''">
-            and lm.fun_name =#{params.fun_name}
-        </if>
-        <if test="params.view_wxname!=null and params.view_wxname!=''">
-            and wx.wx_name like concat('%', #{params.view_wxname}, '%')
-        </if>
-        order by lm.id+0 desc
     </select>
 
     <select id="getViewImageList" resultType="map">

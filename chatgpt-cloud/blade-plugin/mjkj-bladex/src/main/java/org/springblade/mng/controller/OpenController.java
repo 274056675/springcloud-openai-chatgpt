@@ -79,19 +79,12 @@ public class OpenController {
 	@Autowired
 	private ISmsService smsService;
 
-
-
 	@ApiOperationSupport(order = 1)
 	@GetMapping({"/test"})
 	@ApiOperation(value = "测试", notes = "测试")
 	public R test() {
-
 		return R.data("测试成功");
 	}
-
-
-
-
 
 	@ApiOperationSupport(order = 2)
 	@GetMapping({"/cssz/list"})
@@ -217,10 +210,6 @@ public class OpenController {
 
 		return R.data("删除成功");
 	}
-
-
-
-
 
 	@ApiOperationSupport(order = 18)
 	@GetMapping({"/tool/getAllList"})
@@ -434,15 +423,8 @@ public class OpenController {
 				dataMap.put("be", false);//没有点赞
 			}
 		}
-
-
 		return R.data(pages);
-
 	}
-
-
-
-
 
 	@ApiOperationSupport(order = 22)
 	@GetMapping({"/get/notice"})
@@ -514,23 +496,21 @@ public class OpenController {
 	@GetMapping({"/getAllModel"})
 	@ApiOperation(value = "获取所有的模型", notes = "获取所有的模型")
 	public R getAllModel(){
-		QueryWrapper queryWrapper = new QueryWrapper<>();
+		QueryWrapper<Object> queryWrapper = new QueryWrapper<>();
 		queryWrapper.select("mx_lx","is_use_rl","use_num","show_name","model_type","image_size");
 		queryWrapper.ne("model_status",0);
-		List modellist = baseSqlService.getDataListByFieldParams("chat_model", queryWrapper);
+		List<Map<String, Object>> modellist = baseSqlService.getDataListByFieldParams("chat_model", queryWrapper);
 		String jsonString = JSON.toJSONString(modellist);
 		List<AiModel> models = JSON.parseArray(jsonString, AiModel.class);
 
 		List<AiModel> chatModel = new ArrayList<>();
-		List<AiModel> imageModel = new ArrayList();
-		for (int i=0;i<models.size();i++){
-			AiModel model = models.get(i);
+		List<AiModel> imageModel = new ArrayList<>();
+		for (AiModel model : models) {
 			if (model.getModel_type()==0){
 				chatModel.add(model);
 			}else {
 				imageModel.add(model);
 			}
-
 		}
 		Map<String,Object>  modelMap = new HashMap<>();
 		modelMap.put("chat",chatModel);
@@ -557,7 +537,7 @@ public class OpenController {
 		qw.select("id,title,create_time,content_part");
 		qw.orderByDesc("id");
 		IPage<Map<String, Object>> chatNotice = baseSqlService.getDataIPageByFieldParams("chat_notice", page, qw);
- 		return R.data(chatNotice);
+		return R.data(chatNotice);
 	}
 
 	@ApiOperationSupport(order = 26)
